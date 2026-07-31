@@ -1,0 +1,18 @@
+.huina{
+    width: 80%;
+    height: 50vh;
+    background-color: black;
+    border-radius: 5vh;
+    position: relative;
+    top: 1%;
+    left: 10%;
+    z-index: 0;
+}
+.ueban{
+    width: 8%;
+    height: 10vh;
+    background-color: white;
+    position: absolute;
+    border-radius: 2vh;
+    z-index: 1;
+}
