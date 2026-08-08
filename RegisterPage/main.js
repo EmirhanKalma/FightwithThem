@@ -65,7 +65,7 @@ registerBtn.addEventListener("click", async function (event) {
         // Если мы дошли сюда, значит регистрация прошла успешно!
         statusP.innerText = data.message; // "Пользователь ... зарегистрирован!"
         statusP.style.color = "green";
-        
+        window.location.href = data.redirect_to
         // Очищаем поля ввода, чтобы было красиво
         nameInput.value = "";
         passwordInput.value = "";

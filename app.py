@@ -32,6 +32,9 @@ class UserData(BaseModel):
     name: str
     password: str
 
+# Структура данных, которые мы ждем от JS
+class ActionData(BaseModel):
+    action_type: str
 # =====================================================================
 # Вспомогательная функция: Чтение файла базы данных
 # =====================================================================
@@ -76,7 +79,7 @@ def register_user(user: UserData):
         json.dump(users, f, ensure_ascii=False, indent=4)
 
     # 5. Отвечаем браузеру, что всё прошло успешно
-    return {"status": "success", "message": f"Пользователь {user.name} зарегистрирован!"}
+    return {"status": "success", "message": f"Пользователь {user.name} зарегистрирован!" , "redirect_to": "../WelcomePage/index.html"}
 
 # =====================================================================
 # РОУТ 2: Вход пользователя (Авторизация)
@@ -93,13 +96,28 @@ def login_user(user: UserData):
             # Если имя совпало, проверяем совпал ли пароль
             if existing_user["password"] == user.password:
                 # Ура, всё совпало! Пускаем.
-                return {"status": "success", "message": "Вход выполнен успешно!"}
+                return {"status": "success", "message": "Вход выполнен успешно!" , "redirect_to": "../WelcomePage/index.html"}
             else:
                 # Имя правильное, но пароль от другого аккаунта. Ошибка 400.
                 raise HTTPException(status_code=400, detail="Неверный пароль!")
 
     # 3. Если цикл перебрал весь список, но так и не нашел такого имени:
     raise HTTPException(status_code=404, detail="Такой пользователь не найден!")
+
+
+@app.post("/play")
+async def handle_action(data: ActionData):
+    # Здесь логика сервера. 
+    # Например, проверяем, что прислал пользователь.
+    if data.action_type == "play":
+        # Всё хорошо, говорим фронтенду, что статус success 
+        # и даем URL, куда нужно перенаправить пользователя.
+        return {"status": "success", "redirect_to": "../Game/game.html"}
+    else:
+        return {"status": "error", "message": "Неизвестное действие"}
+
+
+
 
 # =====================================================================
 # Запуск сервера

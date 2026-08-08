@@ -58,6 +58,7 @@ signBtn.addEventListener("click", async function (event) {
         // =====================================================================
         statusP.innerText = data.message; // Выводим "Вход выполнен успешно!"
         statusP.style.color = "green";
+        window.location.href = data.redirect_to
 
         // КОГДА БУДЕШЬ ГОТОВ: раскомментируй строку ниже (убери две косые черты).
         // window.location.href принудительно перебросит пользователя на страницу игры!
